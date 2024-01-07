@@ -118,12 +118,21 @@ const BookingView: Component = () => (
 );
 
 const BookingRow: Component<{ date: Dayjs }> = (props) => {
-  const onCopy = () => {
+  const onCopy = (event: MouseEvent) => {
     const entries = getBookingsForDay(props.date.toDate());
     const csv: string = formatCsv(entries);
     navigator.clipboard.writeText(csv);
-  };
 
+    // animation
+    const div = document.createElement("div");
+    div.className = "copy-animation";
+    div.textContent = "Copied";
+    div.addEventListener("animationend", () => {
+      div.remove();
+    });
+    const button = event.currentTarget as HTMLButtonElement;
+    button.appendChild(div);
+  };
   const onRowClick = () => {
     setState("bookings", "activeDay", props.date.toDate());
   };
@@ -167,7 +176,7 @@ const BookingRow: Component<{ date: Dayjs }> = (props) => {
         </Button>
       </div>
       <div class="w-12">
-        <Button level="primary" onClick={onCopy}>
+        <Button level="primary" class="relative" onClick={onCopy}>
           <Icon icon="copy" class="w-6 aspect-square" />
         </Button>
       </div>

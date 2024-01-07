@@ -71,3 +71,30 @@
     @apply inset-0 opacity-30 bg-gray-800;
   }
 }
+
+@keyframes slidein {
+  0% {
+    transform: translateY(0%);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.7;
+  }
+
+  90% {
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+.copy-animation {
+  @apply absolute inset-0 text-gray-800 bg-white w-16 p-2 rounded opacity-70;
+  animation-duration: 400ms;
+  animation-name: slidein;
+  animation-timing-function: cubic-bezier(0, 0, 0.02, 1.005);
+}
