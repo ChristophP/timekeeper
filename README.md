@@ -32,6 +32,15 @@ This way you can minimize the amount of time you need to spend using the SAP cli
 
 ## Developing
 
+This app is built with
+- [Tauri](https://tauri.app/): Electron but nice
+- [Vite](https://vitejs.dev/): A frontend built-tool based on ESBuild.
+- [TypeScript](https://www.typescriptlang.org/): A types superset of JavaScript.
+- [SolidJS](https://www.solidjs.com/): Simple and performant reactivity for building user interfaces.
+- [TailwindCSS](https://tailwindcss.com/): A utility-first CSS framework.
+
+To run a dev server and get started the following commands:
+
 ```sh
 npm ci # install UI dependencies
 npx tauri dev # compile and run rust code, run UI dev server
