@@ -9,6 +9,7 @@ import {
   type Booking,
   incrementExtraRows,
   resetExtraRows,
+  setActiveBookingDay,
 } from "../../store";
 import { Button, Select, Box, Dialog, Icon } from "../../components";
 import dayjs from "../../dayjs";
@@ -134,12 +135,12 @@ const BookingRow: Component<{ date: Dayjs }> = (props) => {
     button.appendChild(div);
   };
   const onRowClick = () => {
-    setState("bookings", "activeDay", props.date.toDate());
+    setActiveBookingDay(props.date.toDate());
   };
 
   const onRowKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Enter") {
-      setState("bookings", "activeDay", props.date.toDate());
+      setActiveBookingDay(props.date.toDate());
     }
   };
   const sumHours = () => {
@@ -222,16 +223,24 @@ const BookingDialog: Component<{ day: Date | null }> = (props) => {
   const onExtraRowHoursInput = (event: InputEvent) => {
     const form = event.currentTarget as HTMLFormElement;
 
-    const inputs = form.querySelectorAll('input[name="hours[]"]');
-    const allHaveHours = ([...inputs] as HTMLInputElement[]).every(
-      (i) => Number(i.value) > 0,
+    const nodeList = form.querySelectorAll('input[name="hours[]"]');
+    const inputs = Array.from(nodeList) as HTMLInputElement[];
+    const allHaveHours = inputs.every((i) => Number(i.value) > 0);
+
+    const totalHours = inputs.reduce(
+      (sum, input) => sum + (input.valueAsNumber || 0),
+      0,
     );
+
+    setState("bookings", { totalHours });
 
     if (allHaveHours) {
       incrementExtraRows();
       return;
     }
   };
+
+  const totalHours = () => state.bookings.totalHours.toFixed(2);
 
   return (
     <Dialog
@@ -243,7 +252,10 @@ const BookingDialog: Component<{ day: Date | null }> = (props) => {
         <h2 class="text-2xl mt-8 mb-4">
           {dayjs(props.day).format("ddd, MMM DD.YYYY")}
         </h2>
-        <div class="text-xl opacity-50">Add time entries</div>
+        <div class="text-xl opacity-50 flex justify-between">
+          <span>Add time entries</span>
+          <span class="inline-block ml-auto">{totalHours()}h</span>
+        </div>
         <div class="mt-2">
           <form
             id="bookings"

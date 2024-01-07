@@ -29,6 +29,7 @@ type AppState = {
     entries: Booking[];
     selectedMonth: { year: number; month: number } | null;
     activeDay: Date | null;
+    totalHours: number;
     extraRows: number;
   };
 };
@@ -44,6 +45,7 @@ const getDefaultStore = (): AppState => ({
     entries: [],
     selectedMonth: null,
     activeDay: null,
+    totalHours: 0,
     extraRows: 0,
   },
 });
@@ -162,7 +164,15 @@ function incrementExtraRows() {
 }
 
 function resetExtraRows() {
-  setState("bookings", { extraRows: 0 });
+  setState("bookings", { extraRows: 0, totalHours: 0 });
+}
+
+function setActiveBookingDay(date: Date) {
+  const totalHours = getBookingsForDay(date).reduce(
+    (sum, item) => sum + item.hours,
+    0,
+  );
+  setState("bookings", { activeDay: date, totalHours });
 }
 
 export {
@@ -176,5 +186,6 @@ export {
   resetStore,
   incrementExtraRows,
   resetExtraRows,
+  setActiveBookingDay,
   type Booking,
 };
