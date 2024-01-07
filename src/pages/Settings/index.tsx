@@ -93,7 +93,7 @@ const AnrRow: Component<{ name: string; anr: string }> = (props) => {
       <div class="flex-1 py-2 px-2 bg-gray-300">{props.name}</div>
       <div class="flex-1 py-2 px-2 text-right  bg-gray-300">{props.anr}</div>
       <div class="w-12">
-        <Button level="secondary" onClick={onEdit}>
+        <Button level="secondary" class="invisible" onClick={onEdit}>
           <Icon icon="edit" class="w-6 aspect-square" />
         </Button>
       </div>
