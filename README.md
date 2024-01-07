@@ -20,7 +20,14 @@ There are installers for different operating systems.
 
 ### Recommended Workflow
 
-Use Timekeeper every day to book your our for that day. Then at the end of the month copy-paste your ours into the SAP client. That way you can minimize the amount of time you need to spend using the SAP client.
+1. Use Timekeeper every day to book your work hours for that day.
+2. At the end of the month, open the SAP client.
+3. In SAP Client: Open a specific day in the SAP client that you want to book.
+4. In Timekeeper: Use the copy button to copy hours for that day.
+5. In Sap Client: Click into the to the first cell of the first empty row and paste. Save your data.
+6. Repeat steps: 3-5 until all days for that month have been transferred.
+
+This way you can minimize the amount of time you need to spend using the SAP client.
 
 ## Developing
 
