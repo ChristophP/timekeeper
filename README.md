@@ -12,11 +12,12 @@ TODO (still need to pre-build and make available these binaries)
 Download Timekeeper from the release page of the repo. Make sure to get the correct binary for your OS/architecture combination.
 There are installers for different operating systems.
 
-### How to use
+## How to use
+
+### First time Setup
 
 1. Go to the settings page and add your level and ANRs.
-2. Then go to the booking page and add bookings.
-3. Open the SAP Client, use the Copy Button in Timekeeper to copy hours for a day. Then paste them into the correct day in the SAP client. 
+2. Then add bookings (described in the [next step](#recommended-workflow))
 
 ### Recommended Workflow
 
