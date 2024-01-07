@@ -1,0 +1,7 @@
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+
+// configure dayjs
+dayjs.extend(duration);
+
+export default dayjs;

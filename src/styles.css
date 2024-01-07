@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+
+    color: #0f0f0f;
+    background-color: #f6f6f6;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  a {
+    @apply hover:underline;
+    @apply active:text-gray-100;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply rounded shadow px-2 py-2;
+    @apply transition;
+    @apply disabled:opacity-30;
+    @apply active:shadow-inner;
+  }
+
+  .btn-primary {
+    @apply bg-blue-300 text-white hover:bg-blue-400;
+    @apply active:shadow-blue-800;
+  }
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-800 hover:bg-gray-300;
+  }
+  .btn-danger {
+    @apply bg-red-500 text-white hover:bg-red-600;
+  }
+  .input {
+    @apply border border-gray-200 hover:border-gray-300;
+  }
+  .select {
+    /* TODO */
+  }
+  .box {
+    @apply p-4;
+  }
+  .box-info {
+    @apply text-blue-600 bg-blue-200;
+  }
+  .box-warning {
+    @apply text-yellow-600 bg-yellow-200;
+  }
+  .box-danger {
+    @apply text-red-600 bg-red-100;
+  }
+  .link {
+    @apply text-blue-400 hover:underline;
+  }
+  .dialog {
+    @apply fixed top-0 mt-24 rounded;
+  }
+  .dialog[open]::backdrop {
+    @apply inset-0 opacity-30 bg-gray-800;
+  }
+}
