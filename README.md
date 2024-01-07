@@ -2,6 +2,10 @@
 
 A UI to make booking your work hours a breeze.
 
+- 😌 **minimize repetitive work:** configure a list of ANRs and your level for reuse across your bookings
+- 📁 **control your data:** the booking data is not sent anywhere, it's stored on your machine in a json format
+- 🚚 **easy transfer:** do your bookings withing timekeeper and simply transfer them day-by-day in the SAP client via copy-paste.
+
 ## Installing
 
 TODO (still need to pre-build and make available these binaries)
