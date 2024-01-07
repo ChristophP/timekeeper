@@ -320,6 +320,7 @@ const AddBookingRow: Component<{
       type="text"
       placeholder="Daily, Code Review, etc ..."
       value={props.description}
+      maxlength="50"
     />
   </div>
 );
