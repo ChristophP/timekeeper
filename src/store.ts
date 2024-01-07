@@ -27,28 +27,34 @@ type AppState = {
   settings: Settings;
   bookings: {
     entries: Booking[];
-    selectedMonth: { year: number; month: number } | null;
+    selectedMonth: { year: number; month: number };
     activeDay: Date | null;
     totalHours: number;
     extraRows: number;
   };
 };
 
-const getDefaultStore = (): AppState => ({
-  settings: {
-    level: "",
-    anrs: {},
-    deleteCount: 5,
-    clearDeleteCountResetTimeout: null,
-  },
-  bookings: {
-    entries: [],
-    selectedMonth: null,
-    activeDay: null,
-    totalHours: 0,
-    extraRows: 0,
-  },
-});
+const getDefaultStore = (): AppState => {
+  const currentDate = new Date();
+  return {
+    settings: {
+      level: "",
+      anrs: {},
+      deleteCount: 5,
+      clearDeleteCountResetTimeout: null,
+    },
+    bookings: {
+      entries: [],
+      selectedMonth: {
+        year: currentDate.getFullYear(),
+        month: currentDate.getMonth(),
+      },
+      activeDay: null,
+      totalHours: 0,
+      extraRows: 0,
+    },
+  };
+};
 
 const [state, setState] = createStore<AppState>(getDefaultStore());
 

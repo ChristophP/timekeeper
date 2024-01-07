@@ -75,17 +75,13 @@ const BookingView: Component = () => (
             });
             return;
           }
-
-          setState("bookings", "selectedMonth", null);
         }}
       >
-        <option value="">Pick a month</option>
         <For each={months}>
           {(item) => {
-            const isSelected = (item: Dayjs): boolean => {
+            const isSelected = (): boolean => {
               const selectedMonth = state.bookings.selectedMonth;
               return (
-                !!selectedMonth &&
                 selectedMonth.year === item.year() &&
                 selectedMonth.month === item.month()
               );
@@ -93,7 +89,7 @@ const BookingView: Component = () => (
             return (
               <option
                 value={`${item.year()}-${item.month()}`}
-                selected={isSelected(item)}
+                selected={isSelected()}
               >
                 {item.format("MMMM YYYY")}
               </option>
