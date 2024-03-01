@@ -98,7 +98,6 @@ const BookingView: Component = () => (
         </For>
       </Select>
     </section>
-
     <section>
       <h2 class="mt-12 mb-4 text-3xl">Days</h2>
       <div class="space-y-4">
@@ -109,7 +108,6 @@ const BookingView: Component = () => (
         </For>
       </div>
     </section>
-
     <BookingDialog day={state.bookings.activeDay} />
   </div>
 );
@@ -157,7 +155,10 @@ const BookingRow: Component<{ date: Dayjs }> = (props) => {
       }}
       onKeyDown={onRowKeyDown}
     >
-      <div class="flex-1 py-2 px-2">{props.date.format("ddd, D. MMM")}</div>
+      <div class="flex-1 py-2 px-2">
+        <span class="inline-block w-12">{props.date.format("ddd")}</span>
+        <span class="inline-block w-24">{props.date.format("D. MMM")}</span>
+      </div>
       <div
         classList={{
           "flex-1 py-2 px-2 text-right": true,
