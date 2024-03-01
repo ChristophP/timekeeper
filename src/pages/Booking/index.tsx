@@ -157,7 +157,10 @@ const BookingRow: Component<{ date: Dayjs }> = (props) => {
     >
       <div class="flex-1 py-2 px-2">
         <span class="inline-block w-12">{props.date.format("ddd")}</span>
-        <span class="inline-block w-24">{props.date.format("D. MMM")}</span>
+        <span class="inline-block text-right w-8">
+          {props.date.format("D.")}
+        </span>{" "}
+        <span class="inline-block w-20">{props.date.format("MMM")}</span>
       </div>
       <div
         classList={{
