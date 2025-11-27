@@ -39,8 +39,6 @@ function formatCsv(entries: Booking[]) {
         String(entry.hours).replace(".", ","), // hours
         entry.level, // level
         entry.anr, // ANR
-        "", // empty
-        "", // empty
         entry.text, // text
       ].join("\t"),
     )
