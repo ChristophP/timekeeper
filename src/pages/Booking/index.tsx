@@ -24,6 +24,8 @@ const months = dateRange(past, now, "months").sort(
   (a, b) => b.unix() - a.unix(),
 );
 
+const IGNORE = "ignore";
+
 // derived signal
 const daysOfTheMonth = () => {
   if (state.bookings.selectedMonth !== null) {
@@ -35,6 +37,7 @@ const daysOfTheMonth = () => {
 
 function formatCsv(entries: Booking[]) {
   return entries
+    .filter((entry) => entry.anr !== IGNORE)
     .map((entry: Booking): string =>
       [
         String(entry.hours).replace(".", ","), // hours
@@ -123,10 +126,14 @@ function countWorkingDays(year: number, month: number) {
   return Array.from({ length: daysInMonth }).reduce<number>((count, _, i) => {
     const day = start.add(i, "day");
     const dayOfWeek = day.day(); // 0 = Sun, 6 = Sat
+    const isIgnored = getBookingsForDay(day.toDate()).some(
+      (item) => item.anr === IGNORE,
+    );
+    const isOffDay = [0 /* sun */, 5 /* fri */, 6 /* sat */].includes(
+      dayOfWeek,
+    );
 
-    return dayOfWeek !== 0 && dayOfWeek !== 6 && dayOfWeek !== 5
-      ? count + 1
-      : count;
+    return !isOffDay && !isIgnored ? count + 1 : count;
   }, 0);
 }
 
@@ -134,14 +141,17 @@ const Summary: Component<{ year: number; month: number }> = (props) => {
   createEffect(() => {
     console.log(props.year, props.month);
   });
-  const monthHours = (): number => {
+  const workedHours = (): number => {
     const bookings = () => getBookingsForMonth(props.year, props.month);
-    return bookings().reduce((acc, item) => item.hours + acc, 0);
+    return bookings().reduce(
+      (acc, item) => (item.anr === IGNORE ? acc : item.hours + acc),
+      0,
+    );
   };
 
   const workingDays = () => countWorkingDays(props.year, props.month);
   const overtime = (): number => {
-    return monthHours() - workingDays() * 8;
+    return workedHours() - workingDays() * 8;
   };
   return (
     <div class="mx-2">
@@ -151,9 +161,20 @@ const Summary: Component<{ year: number; month: number }> = (props) => {
           Overtime calculation currently counts all Mon-Thu as working days !
         </aside>
       </div>
-      <div>Total hours: {monthHours().toFixed(2)}h</div>
+      <div>Total hours: {workedHours().toFixed(2)}h</div>
       <div>Working days: {workingDays().toFixed(1)}</div>
-      <div>Hours due: {overtime().toFixed(2)}h</div>
+      <div>
+        Hours due:{" "}
+        <span
+          classList={{
+            "rounded-sm text-white inline-block py-0.5 px-1": true,
+            "bg-red-500": overtime() < 0,
+            "bg-green-500": overtime() > 0,
+          }}
+        >
+          {overtime().toFixed(2)}h
+        </span>
+      </div>
     </div>
   );
 };
@@ -191,13 +212,17 @@ const BookingRow: Component<{ date: Dayjs }> = (props) => {
   };
 
   const isWeekendDay = () => [0, 6].includes(props.date.day());
+  const isIgnored = () =>
+    getBookingsForDay(props.date.toDate()).some(
+      (entry) => entry.anr === IGNORE,
+    );
 
   return (
     <div
       tabindex="0"
       classList={{
         "flex items-center gap-4 hover:ring rounded": true,
-        "bg-gray-200": isWeekendDay(),
+        "bg-gray-200": isIgnored() || isWeekendDay(),
       }}
       onKeyDown={onRowKeyDown}
     >
@@ -371,6 +396,7 @@ const AddBookingRow: Component<{
           );
         }}
       </For>
+      <option value={IGNORE}>Nichtarbeitstag</option>
     </Select>
     <input
       name="description[]"
