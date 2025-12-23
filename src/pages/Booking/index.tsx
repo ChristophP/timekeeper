@@ -116,15 +116,46 @@ const BookingView: Component = () => (
   </div>
 );
 
+function countWorkingDays(year: number, month: number) {
+  const start = dayjs(new Date(year, month, 1));
+  const daysInMonth = start.daysInMonth();
+
+  return Array.from({ length: daysInMonth }).reduce<number>((count, _, i) => {
+    const day = start.add(i, "day");
+    const dayOfWeek = day.day(); // 0 = Sun, 6 = Sat
+
+    return dayOfWeek !== 0 && dayOfWeek !== 6 && dayOfWeek !== 5
+      ? count + 1
+      : count;
+  }, 0);
+}
+
 const Summary: Component<{ year: number; month: number }> = (props) => {
   createEffect(() => {
     console.log(props.year, props.month);
   });
-  const totalHours = (): number => {
+  const monthHours = (): number => {
     const bookings = () => getBookingsForMonth(props.year, props.month);
     return bookings().reduce((acc, item) => item.hours + acc, 0);
   };
-  return <div class="mx-2 font-bold">Summary: {totalHours().toFixed(2)}h</div>;
+
+  const workingDays = () => countWorkingDays(props.year, props.month);
+  const overtime = (): number => {
+    return monthHours() - workingDays() * 8;
+  };
+  return (
+    <div class="mx-2">
+      <h4 class="font-bold">Summary</h4>
+      <div>
+        <aside class="font-italic text-gray-500">
+          Overtime calculation currently counts all Mon-Thu as working days !
+        </aside>
+      </div>
+      <div>Total hours: {monthHours().toFixed(2)}h</div>
+      <div>Working days: {workingDays().toFixed(1)}</div>
+      <div>Hours due: {overtime().toFixed(2)}h</div>
+    </div>
+  );
 };
 
 const BookingRow: Component<{ date: Dayjs }> = (props) => {

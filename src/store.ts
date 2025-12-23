@@ -116,7 +116,7 @@ createEffect(async () => {
 const getBookingsForMonth = (year: number, month: number): Booking[] => {
   return state.bookings.entries.filter((entry) => {
     const date = dayjs(entry.date);
-    return date.isSame(`${year}-${month}-01`, "month");
+    return date.year() === year && date.month() === month;
   });
 };
 
