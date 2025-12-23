@@ -1,10 +1,11 @@
-import { type Component, For, Show } from "solid-js";
+import { type Component, For, Show, createEffect } from "solid-js";
 import { A } from "@solidjs/router";
 import {
   state,
   setState,
   setBookingsForDay,
   getBookingsForDay,
+  getBookingsForMonth,
   baseDataSet,
   type Booking,
   incrementExtraRows,
@@ -106,9 +107,25 @@ const BookingView: Component = () => (
         </For>
       </div>
     </section>
+    <hr class="my-4" />
+    <Summary
+      year={state.bookings.selectedMonth.year}
+      month={state.bookings.selectedMonth.month}
+    />
     <BookingDialog day={state.bookings.activeDay} />
   </div>
 );
+
+const Summary: Component<{ year: number; month: number }> = (props) => {
+  createEffect(() => {
+    console.log(props.year, props.month);
+  });
+  const totalHours = (): number => {
+    const bookings = () => getBookingsForMonth(props.year, props.month);
+    return bookings().reduce((acc, item) => item.hours + acc, 0);
+  };
+  return <div class="mx-2 font-bold">Summary: {totalHours().toFixed(2)}h</div>;
+};
 
 const BookingRow: Component<{ date: Dayjs }> = (props) => {
   const onCopy = (event: MouseEvent) => {
