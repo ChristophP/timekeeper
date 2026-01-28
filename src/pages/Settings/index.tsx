@@ -40,7 +40,11 @@ const SettingsView: Component = () => {
       <section>
         <h2 class="mt-12 mb-4 text-3xl">ANRs</h2>
         <div class="space-y-4">
-          <For each={Object.entries(state.settings.anrs)}>
+          <For
+            each={Object.entries(state.settings.anrs).sort((a, b) =>
+              a[1].toLowerCase().localeCompare(b[1].toLowerCase()),
+            )}
+          >
             {([anr, description]) => <AnrRow name={description} anr={anr} />}
           </For>
         </div>

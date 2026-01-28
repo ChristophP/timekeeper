@@ -167,9 +167,9 @@ const Summary: Component<{ year: number; month: number }> = (props) => {
         Hours due:{" "}
         <span
           classList={{
-            "rounded-sm text-white inline-block py-0.5 px-1": true,
-            "bg-red-500": overtime() < 0,
-            "bg-green-500": overtime() > 0,
+            "rounded-sm inline-block py-0.5 px-1": true,
+            "text-white bg-red-500": overtime() < 0,
+            "text-white bg-green-500": overtime() > 0,
           }}
         >
           {overtime().toFixed(2)}h
