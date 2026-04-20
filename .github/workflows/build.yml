@@ -131,7 +131,7 @@ jobs:
         run: npm run tauri ios init
 
       - name: Build iOS app
-        run: npm run tauri ios build -- -- CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+        run: npm run tauri ios build -- -- CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" DEVELOPMENT_TEAM=""
 
       - name: Upload macOS artifacts
         uses: actions/upload-artifact@v4
