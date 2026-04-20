@@ -127,6 +127,9 @@ jobs:
         run: |
           sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 
+      - name: Init iOS project
+        run: npm run tauri ios init
+
       - name: Build iOS app
         run: npm run tauri ios build
 
