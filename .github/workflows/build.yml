@@ -115,7 +115,7 @@ jobs:
           rustup target add x86_64-linux-android
 
       - name: Build Android app
-        run: cargo tauri android build
+        run: npm run tauri android build
 
       # ----------------------------
       # 🍏 IOS BUILD
@@ -125,7 +125,7 @@ jobs:
           sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 
       - name: Build iOS app
-        run: cargo tauri ios build
+        run: npm run tauri ios build
 
       - name: Upload macOS artifacts
         uses: actions/upload-artifact@v4
