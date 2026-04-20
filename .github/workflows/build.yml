@@ -114,6 +114,9 @@ jobs:
           rustup target add i686-linux-android
           rustup target add x86_64-linux-android
 
+      - name: Init Android project
+        run: npm run tauri android init
+
       - name: Build Android app
         run: npm run tauri android build
 
